@@ -6,10 +6,10 @@
 //
 
 /// Base class containing a discriminator property
-open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: BaseCodingKey> : DescriminatedCodable {
+open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: PolyCompatibleCodingKey> : DescriminatedCodable {
 
     public typealias TypeDescriminator = D
-    public typealias Codingkeys = K
+    public typealias PolyCodingKey = K
 
     public let typeDescriminator: TypeDescriminator
 
@@ -19,13 +19,13 @@ open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: BaseCodingKey> : 
     }
 
     public required init( from decoder: Decoder ) throws {
-        let container = try decoder.container( keyedBy: Codingkeys.self )
+        let container = try decoder.container( keyedBy: PolyCodingKey.self )
 
         typeDescriminator = try container.decode( D.self, forKey: K.discriminatorKey )
     }
 
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.container( keyedBy: Codingkeys.self )
+        var container = encoder.container( keyedBy: PolyCodingKey.self )
 
         try container.encode( typeDescriminator, forKey:  K.discriminatorKey )
     }
@@ -33,6 +33,20 @@ open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: BaseCodingKey> : 
     static func decode<Key>( from container: KeyedDecodingContainer<Key>, forKey key: Key ) throws -> Self {
         let baseClassObject = try container.decode( self, forKey: key )
         return try baseClassObject.typeDescriminator.decode( from: container, forKey: key )
+    }
+
+    // MARK: Utility
+    static func == (lhs: PolymorphicBaseClass, rhs: PolymorphicBaseClass) -> Bool {
+        guard lhs.equalTo(other: rhs) else {
+            return false
+        }
+
+        return true
+    }
+
+    /// Check equality in this base class
+    func equalTo(other: PolymorphicBaseClass) -> Bool {
+        return self.typeDescriminator == other.typeDescriminator
     }
 }
 

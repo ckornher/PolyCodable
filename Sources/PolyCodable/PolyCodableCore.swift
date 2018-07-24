@@ -4,11 +4,12 @@ public protocol PolymorphicDiscriminator : Codable, RawRepresentable where Self.
 }
 
 /// The coding keys to use for the base class or common struct root.
-public protocol BaseCodingKey : CodingKey /*, RawRepresentable where Self.RawValue == String*/ {
+public protocol PolyCompatibleCodingKey : CodingKey /*, RawRepresentable where Self.RawValue == String*/ {
     static var discriminatorKey: Self { get }
 }
 
 public protocol DescriminatedCodable: Codable {
     associatedtype TypeDescriminator: PolymorphicDiscriminator
-    associatedtype Codingkeys: BaseCodingKey
+    associatedtype PolyCodingKey: PolyCompatibleCodingKey
 }
+
