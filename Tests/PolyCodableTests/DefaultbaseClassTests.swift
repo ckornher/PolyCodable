@@ -9,7 +9,7 @@ enum DBC_TestDecriminator: String, PolymorphicDiscriminator {
     case dbc_class2
 
     func decode<DC, Key>(from container: KeyedDecodingContainer<Key>, forKey key: Key) throws -> DC
-        where DC : DescriminatedCodable, Key : CodingKey {
+        where DC : PolyCodable, Key: CodingKey {
             switch( self )
             {
             case .dbc_class1:
@@ -125,8 +125,8 @@ class DBC_SimpleContainer: Codable, Equatable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        a = try DBC_BaseClass.decode( from: container, forKey: .a )
-        b = try DBC_BaseClass.decode( from: container, forKey: .b )
+        a = try container.decodePolymorphic( DBC_BaseClass.self, forKey: .a )
+        b = try container.decodePolymorphic( DBC_BaseClass.self, forKey: .b )
     }
 
     static func == (lhs: DBC_SimpleContainer, rhs: DBC_SimpleContainer) -> Bool {

@@ -1,6 +1,6 @@
 
 public protocol PolymorphicDiscriminator : Codable, RawRepresentable where Self.RawValue == String {
-    func decode<DC: DescriminatedCodable, Key: CodingKey>( from container: KeyedDecodingContainer<Key>, forKey key: Key) throws -> DC
+    func decode<DC: PolyCodable, Key: CodingKey>( from container: KeyedDecodingContainer<Key>, forKey key: Key) throws -> DC
 }
 
 /// The coding keys to use for the base class or common struct root.
@@ -8,8 +8,7 @@ public protocol PolyCompatibleCodingKey : CodingKey /*, RawRepresentable where S
     static var discriminatorKey: Self { get }
 }
 
-public protocol DescriminatedCodable: Codable {
+public protocol PolyCodable: AnyObject, Codable {
     associatedtype TypeDescriminator: PolymorphicDiscriminator
     associatedtype PolyCodingKey: PolyCompatibleCodingKey
 }
-
