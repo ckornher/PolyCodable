@@ -6,7 +6,12 @@
 //
 
 /// Base class containing a discriminator property
+
 open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: PolyCompatibleCodingKey> : PolyCodable {
+
+    public static func polymorphicCodingScheme() -> PolymorphicCodingScheme {
+        return StandardPolymorphicCodingScheme<PolymorphicBaseClass>()
+    }
 
     public typealias TypeDescriminator = D
     public typealias PolyCodingKey = K
@@ -29,11 +34,6 @@ open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: PolyCompatibleCod
 
         try container.encode( typeDescriminator, forKey:  K.discriminatorKey )
     }
-//
-//    static func decode<Key>( from container: KeyedDecodingContainer<Key>, forKey key: Key ) throws -> Self {
-//        let baseClassObject = try container.decode( self, forKey: key )
-//        return try baseClassObject.typeDescriminator.decode( from: container, forKey: key )
-//    }
 
     // MARK: Utility
     static func == (lhs: PolymorphicBaseClass, rhs: PolymorphicBaseClass) -> Bool {
