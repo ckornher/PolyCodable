@@ -8,15 +8,26 @@ enum DBC_TestDecriminator: String, PolymorphicDiscriminator {
     case dbc_class1
     case dbc_class2
 
-    func decode<DC, Key>(from container: KeyedDecodingContainer<Key>, forKey key: Key) throws -> DC
-        where DC : PolyCodable, Key: CodingKey {
+    func decode<PC, Key>(from container: KeyedDecodingContainer<Key>, forKey key: Key) throws -> PC
+        where PC : PolyCodable, Key: CodingKey {
             switch( self )
             {
             case .dbc_class1:
-                return try container.decode( DBC_Class1.self, forKey: key ) as! DC
+                return try container.decode( DBC_Class1.self, forKey: key ) as! PC
 
             case .dbc_class2:
-                return try container.decode( DBC_Class2.self, forKey: key ) as! DC
+                return try container.decode( DBC_Class2.self, forKey: key ) as! PC
+            }
+    }
+
+    func decodeNext<PC: PolyCodable>( from container: inout UnkeyedDecodingContainer ) throws -> PC {
+            switch( self )
+            {
+            case .dbc_class1:
+                return try container.decode( DBC_Class1.self ) as! PC
+
+            case .dbc_class2:
+                return try container.decode( DBC_Class2.self ) as! PC
             }
     }
 }
@@ -27,8 +38,6 @@ class DBC_Class1 : DBC_BaseClass {
     private enum CodingKeys: CodingKey {
         case dbc_class1Name
     }
-
-    // MARK: -
 
     init() {
         dbc_class1Name = "an instance of DBC_Class1"
@@ -71,8 +80,6 @@ class DBC_Class2 : DBC_BaseClass
     private enum CodingKeys: CodingKey {
         case dbc_class2Name
     }
-
-    // MARK: -
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -179,10 +186,7 @@ class DBC_SimpleOptionalContainer: Codable, Equatable {
     }
 }
 
-
-
-
-// ---- TestCase1 ----
+// MARK: - Tests
 
 final class DefaultBaseClassTests: XCTestCase {
 

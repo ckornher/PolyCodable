@@ -9,7 +9,9 @@ public protocol PolyCompatibleCodingKey : CodingKey /*, RawRepresentable where S
 }
 
 public protocol PolymorphicDiscriminator : Codable, RawRepresentable where Self.RawValue == String {
-    func decode<DC: PolyCodable, Key: CodingKey>( from container: KeyedDecodingContainer<Key>, forKey key: Key) throws -> DC
+    func decode<PC: PolyCodable, Key: CodingKey>( from container: KeyedDecodingContainer<Key>, forKey key: Key) throws -> PC
+
+    func decodeNext<PC: PolyCodable>( from container: inout UnkeyedDecodingContainer ) throws -> PC
 }
 
 public protocol PolyCodable: AnyObject, Codable {
@@ -31,6 +33,13 @@ public protocol PolymorphicCodingScheme : class {
     /// This method can be re-implemented for custom poymorphic coding schemes.  The key enum in this container must contain the descrimintor key.
     func polymorphicDecodeIfPresent<Key, PC>(from container: KeyedDecodingContainer<Key>,
                                              forKey key: Key) throws -> PC? where PC : PolyCodable, Key : CodingKey
+
+    // MARK: Collections
+
+    /// Decode polymorphically from a standard KeyedDecodingContainer using one of the standard methods.
+    /// This method can be re-implemented for custom poymorphic coding schemes.  The key enum in this container must contain the descrimintor key.
+    func polymorphicDecode<Key, PC>(from container: KeyedDecodingContainer<Key>,
+                                    forKey key: Key) throws -> [PC] where PC : PolyCodable, Key : CodingKey
 }
 
 open class StandardPolymorphicCodingScheme<CodedType> : PolymorphicCodingScheme where CodedType: PolyCodable{
@@ -52,7 +61,30 @@ open class StandardPolymorphicCodingScheme<CodedType> : PolymorphicCodingScheme 
         return nil
     }
 
-    // MARK:
+    // MARK: Collections
+
+    /// Decode polymorphically from a standard KeyedDecodingContainer using one of the standard methods.
+    /// This method can be re-implemented for custom poymorphic coding schemes.  The key enum in this container must contain the descrimintor key.
+    open func polymorphicDecode<Key, PC>(from container: KeyedDecodingContainer<Key>,
+                                         forKey key: Key) throws -> [PC] where PC : PolyCodable, Key : CodingKey {
+
+        let descrimintorArray = try container.decode( [PolyCodableDescriminatorContainer<CodedType>].self, forKey: key )
+        var desciminatorIterator = descrimintorArray.makeIterator()
+
+        var decoded = [PC]()
+        var arrayContainer = try container.nestedUnkeyedContainer(forKey: key)
+
+        while !arrayContainer.isAtEnd {
+            guard let descriminator = desciminatorIterator.next()?.typeDescriminator else {
+                preconditionFailure("internal logic failure")
+            }
+            decoded.append( try descriminator.decodeNext( from: &arrayContainer ))
+        }
+
+        return decoded
+    }
+
+    // MARK: - Utility
     open func decodeDescrimintor<Key>( from container: KeyedDecodingContainer<Key>,
                                   forKey key: Key ) throws -> CodedType.TypeDescriminator {
         let descriminator = try decodeDescrimintorIfPresent( from: container, forKey: key)

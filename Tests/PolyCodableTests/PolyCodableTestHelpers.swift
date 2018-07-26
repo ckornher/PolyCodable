@@ -62,13 +62,13 @@ func dumpEncodedJSON<T: Encodable>( _ encodable: T, instance: String ) {
     dumpJSON( encodable, name: instance + " encoded as" )
 }
 
-public func ==<Element : Equatable>(lhs: Element?, rhs: Element?) -> Bool {
-    switch (lhs, rhs) {
-    case (.some(let l), .some(let r)):
-        return l == r
-    case (nil, nil):
-        return true
-    default:
-        return false
-    }
-}
+//public func ==<Element : Equatable>(lhs: Element?, rhs: Element?) -> Bool {
+//    switch (lhs, rhs) {
+//    case (.some(let l), .some(let r)):
+//        return l == r
+//    case (nil, nil):
+//        return true
+//    default:
+//        return false
+//    }
+//}

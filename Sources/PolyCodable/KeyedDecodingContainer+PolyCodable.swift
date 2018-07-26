@@ -20,7 +20,9 @@ extension KeyedDecodingContainer {
         return try T.polymorphicCodingScheme().polymorphicDecodeIfPresent( from: self, forKey: key )
     }
 
-    // TODO: decode Polymorphic Arrays
+    public func decodePolymorphic<T>(_ type: [T].Type, forKey key: KeyedDecodingContainer<K>.Key) throws -> [T] where T : PolyCodable {
+        return try T.polymorphicCodingScheme().polymorphicDecode( from: self, forKey: key )
+    }
 
     // TODO: decode Polymorphic Dictionaries
 }
