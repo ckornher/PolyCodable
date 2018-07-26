@@ -53,6 +53,7 @@ class DBC_Class1 : DBC_BaseClass {
 
 
     // Mark: Equatable support
+
     override func equalTo(other: DBC_BaseClass) -> Bool {
         guard super.equalTo(other: other),
         let other = other as? DBC_Class1 else { return false }
@@ -131,15 +132,61 @@ class DBC_SimpleContainer: Codable, Equatable {
 
     static func == (lhs: DBC_SimpleContainer, rhs: DBC_SimpleContainer) -> Bool {
         return
-            lhs.a == lhs.a &&
-            lhs.b == lhs.b
+            lhs.a == rhs.a &&
+            lhs.b == rhs.b
     }
 }
+
+class DBC_SimpleOptionalContainer: Codable, Equatable {
+    let a: DBC_BaseClass?
+    let b: DBC_BaseClass?
+
+    private enum CodingKeys: CodingKey
+    {
+        case a
+        case b
+    }
+
+    init( a: DBC_BaseClass?, b: DBC_BaseClass?) {
+        self.a = a
+        self.b = b
+    }
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        a = try container.decodePolymorphicIfPresent( DBC_BaseClass.self, forKey: .a )
+        b = try container.decodePolymorphicIfPresent( DBC_BaseClass.self, forKey: .b )
+    }
+
+    static func == (lhs: DBC_SimpleOptionalContainer, rhs: DBC_SimpleOptionalContainer) -> Bool {
+        // This should not be necessary
+        if let la = lhs.a,
+            let ra = rhs.a  {
+            if la != ra { return false }
+        } else {
+            if lhs.a != nil || rhs.a != nil { return false }
+        }
+
+        if let lb = lhs.b,
+            let rb = rhs.b  {
+            if lb != rb { return false }
+        } else {
+            if lhs.b != nil || rhs.b != nil { return false }
+        }
+
+        return true
+    }
+}
+
+
+
 
 // ---- TestCase1 ----
 
 final class DefaultBaseClassTests: XCTestCase {
-    func testDefaultBaseCodingKeyedClasses() throws {
+
+    func testDefaultBaseCodingKeyedClassesNonOptional() throws {
 
         try assertRoundTrip(original: DBC_SimpleContainer(a: DBC_Class1(), b: DBC_Class2()),
                             name: "DBC_SimpleContainer(a: DBC_Class1(), b: DBC_Class2())")
@@ -154,7 +201,33 @@ final class DefaultBaseClassTests: XCTestCase {
                             name: "DBC_SimpleContainer(a: DBC_Class2(), b: DBC_Class2())")
     }
 
+    func testDefaultBaseCodingKeyedClassesOptional() throws {
+
+        try assertRoundTrip(original: DBC_SimpleOptionalContainer(a: DBC_Class1(), b: DBC_Class2()),
+                            name: "DBC_SimpleOptionalContainer(a: DBC_Class1(), b: DBC_Class2())")
+
+        try assertRoundTrip(original: DBC_SimpleOptionalContainer(a: DBC_Class2(), b: DBC_Class1()),
+                            name: "DBC_SimpleOptionalContainer(a: DBC_Class2(), b: DBC_Class1())")
+
+        try assertRoundTrip(original: DBC_SimpleOptionalContainer(a: DBC_Class1(), b: DBC_Class1()),
+                            name: "DBC_SimpleOptionalContainer(a: DBC_Class1(), b: DBC_Class1())")
+
+        try assertRoundTrip(original: DBC_SimpleOptionalContainer(a: DBC_Class2(), b: DBC_Class2()),
+                            name: "DBC_SimpleOptionalContainer(a: DBC_Class2(), b: DBC_Class2())")
+
+        // nil arguments
+        try assertRoundTrip(original: DBC_SimpleOptionalContainer(a: DBC_Class1(), b: nil),
+                            name: "DBC_SimpleOptionalContainer(a: DBC_Class1(), b: nil)")
+
+        try assertRoundTrip(original: DBC_SimpleOptionalContainer(a: nil, b: DBC_Class1()),
+                            name: "DBC_SimpleOptionalContainer(a: nil, b: DBC_Class1())")
+
+        try assertRoundTrip(original: DBC_SimpleOptionalContainer(a: nil, b: nil),
+                            name: "DBC_SimpleOptionalContainer(a: nil, b: nil)")
+    }
+
     static var allTests = [
-        ("testExample", testDefaultBaseCodingKeyedClasses),
+        ("nonOptional", testDefaultBaseCodingKeyedClassesNonOptional),
+        ("optional", testDefaultBaseCodingKeyedClassesOptional),
     ]
 }

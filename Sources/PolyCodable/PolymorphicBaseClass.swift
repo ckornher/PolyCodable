@@ -7,7 +7,7 @@
 
 /// Base class containing a discriminator property
 
-open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: PolyCompatibleCodingKey> : PolyCodable {
+open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: PolyCompatibleCodingKey> : PolyCodable, Equatable {
 
     public static func polymorphicCodingScheme() -> PolymorphicCodingScheme {
         return StandardPolymorphicCodingScheme<PolymorphicBaseClass>()
@@ -36,7 +36,7 @@ open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: PolyCompatibleCod
     }
 
     // MARK: Utility
-    static func == (lhs: PolymorphicBaseClass, rhs: PolymorphicBaseClass) -> Bool {
+    public static func == (lhs: PolymorphicBaseClass, rhs: PolymorphicBaseClass) -> Bool {
         guard lhs.equalTo(other: rhs) else {
             return false
         }
