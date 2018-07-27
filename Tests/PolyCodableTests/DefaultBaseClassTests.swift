@@ -5,6 +5,7 @@ import Foundation
 typealias DBC_BaseClass = DefaultKeyedPolymorphicClass<DBC_TestDecriminator>
 
 enum DBC_TestDecriminator: String, PolymorphicDiscriminator {
+
     case dbc_class1
     case dbc_class2
 
