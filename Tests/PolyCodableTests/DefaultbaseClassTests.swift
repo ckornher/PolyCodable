@@ -30,6 +30,20 @@ enum DBC_TestDecriminator: String, PolymorphicDiscriminator {
                 return try container.decode( DBC_Class2.self ) as! PC
             }
     }
+
+    func decodeNextDictionaryElement<DictionaryKey, PC>( from container: inout UnkeyedDecodingContainer ) throws -> PolymorphicDictionaryEntry<DictionaryKey,PC>
+        where DictionaryKey: Hashable & Codable, PC: PolyCodable {
+
+            switch( self )
+            {
+            case .dbc_class1:
+                return let kv = try container.decode( (key:DictionaryKey, value:DBC_Class1) )
+
+            case .dbc_class2:
+                return try container.decode( DBC_Class2.self ) as! PC
+            }
+    }
+
 }
 
 class DBC_Class1 : DBC_BaseClass {
