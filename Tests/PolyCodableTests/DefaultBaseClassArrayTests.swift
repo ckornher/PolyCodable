@@ -8,25 +8,25 @@
 import XCTest
 
 class DBC_ArrayContainer: Codable, Equatable {
-    let array: [DBC_BaseClass]
+    let aPolymorphicArray: [DBC_BaseClass]
 
     private enum CodingKeys: CodingKey
     {
-        case array
+        case aPolymorphicArray
     }
 
     init( array: [DBC_BaseClass] ) {
-        self.array = array
+        self.aPolymorphicArray = array
     }
 
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        array = try container.decodePolymorphic( [DBC_BaseClass].self, forKey: .array )
+        aPolymorphicArray = try container.decodePolymorphic( [DBC_BaseClass].self, forKey: .aPolymorphicArray )
     }
 
     static func == (lhs: DBC_ArrayContainer, rhs: DBC_ArrayContainer) -> Bool {
-        return lhs.array == rhs.array
+        return lhs.aPolymorphicArray == rhs.aPolymorphicArray
     }
 }
 
