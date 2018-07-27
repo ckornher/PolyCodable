@@ -8,11 +8,6 @@
 /// Base class containing a discriminator property
 
 open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: PolyCompatibleCodingKey> : PolyCodable, Equatable {
-
-    public static func polymorphicCodingScheme() -> PolymorphicCodingScheme {
-        return StandardPolymorphicCodingScheme<PolymorphicBaseClass>()
-    }
-
     public typealias TypeDescriminator = D
     public typealias PolyCodingKey = K
 

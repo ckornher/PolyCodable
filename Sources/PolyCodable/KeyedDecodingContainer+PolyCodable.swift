@@ -12,19 +12,23 @@ import Foundation
 
 extension KeyedDecodingContainer {
 
-    public func decodePolymorphic<T>(_ type: T.Type, forKey key: KeyedDecodingContainer<K>.Key) throws -> T where T : PolyCodable {
-        return try T.polymorphicCodingScheme().polymorphicDecode( from: self, forKey: key )
+    public func decodePolymorphic<T>(_ type: T.Type,
+                                     forKey key: KeyedDecodingContainer<K>.Key,
+                                     codingScheme: PolymorphicCodingScheme = defaultPolymorphicCodingScheme) throws -> T where T : PolyCodable {
+        return try codingScheme.polymorphicDecode( from: self, forKey: key )
     }
 
-    public func decodePolymorphicIfPresent<T>(_ type: T.Type, forKey key: K) throws -> T? where T : PolyCodable {
-        return try T.polymorphicCodingScheme().polymorphicDecodeIfPresent( from: self, forKey: key )
+    public func decodePolymorphicIfPresent<T>(_ type: T.Type,
+                                              forKey key: K,
+                                              codingScheme: PolymorphicCodingScheme = defaultPolymorphicCodingScheme) throws -> T? where T : PolyCodable {
+        return try codingScheme.polymorphicDecodeIfPresent( from: self, forKey: key )
     }
 
-    public func decodePolymorphic<T>(_ type: [T].Type, forKey key: KeyedDecodingContainer<K>.Key) throws -> [T] where T : PolyCodable {
-        return try T.polymorphicCodingScheme().polymorphicDecode( from: self, forKey: key )
+    public func decodePolymorphic<T>(_ type: [T].Type,
+                                     forKey key: KeyedDecodingContainer<K>.Key,
+                                     codingScheme: PolymorphicCodingScheme = defaultPolymorphicCodingScheme) throws -> [T] where T : PolyCodable {
+        return try codingScheme.polymorphicDecode( from: self, forKey: key )
     }
-
-    // TODO: decode Polymorphic Dictionaries
 }
 
 

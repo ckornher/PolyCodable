@@ -2,7 +2,9 @@ import XCTest
 @testable import PolyCodable
 import Foundation
 
+// The abscract base class works
 typealias DBC_BaseClass = DefaultKeyedPolymorphicClass<DBC_TestDecriminator>
+
 
 enum DBC_TestDecriminator: String, PolymorphicDiscriminator {
 
