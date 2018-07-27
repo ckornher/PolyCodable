@@ -8,11 +8,6 @@ public protocol PolyCompatibleCodingKey : CodingKey /*, RawRepresentable where S
     static var discriminatorKey: Self { get }
 }
 
-public struct PolymorphicDictionaryEntry<DictionaryKey, PC> where DictionaryKey: Hashable & Codable, PC: PolyCodable {
-    let key: DictionaryKey
-    let value: PC
-}
-
 public protocol PolymorphicDiscriminator : Codable, RawRepresentable where Self.RawValue == String {
     func decode<PC: PolyCodable, Key: CodingKey>( from container: KeyedDecodingContainer<Key>, forKey key: Key) throws -> PC
 
