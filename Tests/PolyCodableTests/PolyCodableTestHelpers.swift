@@ -6,6 +6,27 @@
 //
 
 import Foundation
+import XCTest
+
+func assertRoundTrip<T: Codable & Equatable>(original: T, name: String) throws {
+
+    dumpEncodedJSON(original, instance: name)
+
+    let jsonEncoder = JSONEncoder()
+    let jsonData = try jsonEncoder.encode(original)
+
+    let jsonDecoder = JSONDecoder()
+    let decoded = try jsonDecoder.decode(T.self, from: jsonData)
+
+    XCTAssert( original == decoded )
+
+    print("\n")
+    dump( original, name:"Original" )
+
+    print("\n")
+    dump( decoded, name:"Decoded" )
+}
+
 
 extension String {
     /*
@@ -41,3 +62,13 @@ func dumpEncodedJSON<T: Encodable>( _ encodable: T, instance: String ) {
     dumpJSON( encodable, name: instance + " encoded as" )
 }
 
+//public func ==<Element : Equatable>(lhs: Element?, rhs: Element?) -> Bool {
+//    switch (lhs, rhs) {
+//    case (.some(let l), .some(let r)):
+//        return l == r
+//    case (nil, nil):
+//        return true
+//    default:
+//        return false
+//    }
+//}
