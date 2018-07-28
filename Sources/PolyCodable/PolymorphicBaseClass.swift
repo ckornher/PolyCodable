@@ -44,4 +44,3 @@ open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: PolyCompatibleCod
         return self.typeDescriminator == other.typeDescriminator
     }
 }
-
