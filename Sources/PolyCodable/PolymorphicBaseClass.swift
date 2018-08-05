@@ -24,7 +24,7 @@ open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: PolyCompatibleCod
         typeDescriminator = try container.decode( D.self, forKey: K.discriminatorKey )
     }
 
-    public func encode(to encoder: Encoder) throws {
+    open func encode(to encoder: Encoder) throws {
         var container = encoder.container( keyedBy: PolyCodingKey.self )
 
         try container.encode( typeDescriminator, forKey:  K.discriminatorKey )
