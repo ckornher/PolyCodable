@@ -71,8 +71,8 @@ open class StandardPolymorphicCodingScheme : PolymorphicCodingScheme {
 
     // MARK: - Utility
     open func decodeDescrimintor<Key, PC>( from container: KeyedDecodingContainer<Key>,
-                                       forKey key: Key,
-                                       type: PC.Type) throws -> PC.TypeDescriminator where PC: PolyCodable {
+                                           forKey key: Key,
+                                           type: PC.Type) throws -> PC.TypeDescriminator where PC: PolyCodable {
         let descriminator = try decodeDescrimintorIfPresent( from: container, forKey: key, type: type)
 
         if let descriminator = descriminator {

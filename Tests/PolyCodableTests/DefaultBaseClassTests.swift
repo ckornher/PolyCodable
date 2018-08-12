@@ -11,6 +11,18 @@ enum DBC_TestDecriminator: String, PolymorphicDiscriminator {
     case dbc_class1
     case dbc_class2
 
+    func from<PC: PolyCodable>( _ data: Data, jsonDecoder decoder: JSONDecoder ) throws -> PC {
+        switch( self )
+        {
+        case .dbc_class1:
+            return try decoder.decode( DBC_Class1.self, from: data ) as! PC
+
+        case .dbc_class2:
+            return try decoder.decode( DBC_Class2.self, from: data ) as! PC
+        }
+    }
+
+
     func decode<PC, Key>(from container: KeyedDecodingContainer<Key>, forKey key: Key) throws -> PC
         where PC : PolyCodable, Key: CodingKey {
             switch( self )
@@ -24,15 +36,27 @@ enum DBC_TestDecriminator: String, PolymorphicDiscriminator {
     }
 
     func decodeNext<PC: PolyCodable>( from container: inout UnkeyedDecodingContainer ) throws -> PC {
-            switch( self )
-            {
-            case .dbc_class1:
-                return try container.decode( DBC_Class1.self ) as! PC
+        switch( self )
+        {
+        case .dbc_class1:
+            return try container.decode( DBC_Class1.self ) as! PC
 
-            case .dbc_class2:
-                return try container.decode( DBC_Class2.self ) as! PC
-            }
+        case .dbc_class2:
+            return try container.decode( DBC_Class2.self ) as! PC
+        }
     }
+
+// TODO:
+//    func from<PC: PolyCodable>( jsonData: Data  ) throws -> PC {
+//        switch( self )
+//        {
+//        case .dbc_class1:
+//            return try container.decode( DBC_Class1.self ) as! PC
+//
+//        case .dbc_class2:
+//            return try container.decode( DBC_Class2.self ) as! PC
+//        }
+//    }
 }
 
 class DBC_Class1 : DBC_BaseClass {

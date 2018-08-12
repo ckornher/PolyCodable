@@ -1,3 +1,12 @@
+//
+//  CoreTypes
+//  PolyCodable
+//
+//  Created by Christopher Kornher on 7/22/18.
+//
+
+import Foundation
+
 /// All errors thrown by this module
 enum PolyCobableError: Error {
     case decriminatorNotFound
@@ -8,12 +17,9 @@ public protocol PolyCompatibleCodingKey : CodingKey /*, RawRepresentable where S
     static var discriminatorKey: Self { get }
 }
 
-public struct PolymorphicDictionaryEntry<DictionaryKey, PC> where DictionaryKey: Hashable & Codable, PC: PolyCodable {
-    let key: DictionaryKey
-    let value: PC
-}
-
 public protocol PolymorphicDiscriminator : Codable, RawRepresentable where Self.RawValue == String {
+    func from<PC: PolyCodable>( _ data: Data, jsonDecoder decoder: JSONDecoder ) throws -> PC
+
     func decode<PC: PolyCodable, Key: CodingKey>( from container: KeyedDecodingContainer<Key>, forKey key: Key) throws -> PC
 
     func decodeNext<PC: PolyCodable>( from container: inout UnkeyedDecodingContainer ) throws -> PC
@@ -24,6 +30,11 @@ public protocol PolyCodable: Codable {
     associatedtype PolyCodingKey: PolyCompatibleCodingKey
 }
 
+// MARK: Future
+//public struct PolymorphicDictionaryEntry<DictionaryKey, PC> where DictionaryKey: Hashable & Codable, PC: PolyCodable {
+//    let key: DictionaryKey
+//    let value: PC
+//}
 
 
 
