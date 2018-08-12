@@ -5,8 +5,8 @@
 //  Created by Christopher Kornher on 7/22/18.
 //
 
-/// Base class containing a discriminator property
-
+/// A generic base class provided for convenience
+/// 
 open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: PolyCompatibleCodingKey> : PolyCodable, Equatable {
     public typealias TypeDescriminator = D
     public typealias PolyCodingKey = K

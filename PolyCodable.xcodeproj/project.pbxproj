@@ -29,9 +29,8 @@
 		A4982DDC2108FC8E001F5BB2 /* PolyCodableDescriminatorContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4982DDB2108FC8E001F5BB2 /* PolyCodableDescriminatorContainer.swift */; };
 		A4982DDD210A58BA001F5BB2 /* PolymorphicBaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41F925D210535AC0078313D /* PolymorphicBaseClass.swift */; };
 		A4AFE82921066CFE001A64E5 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XCTestManifests.swift */; };
-		A4B64AC8210D0C3300A236D4 /* DefaultBaseClassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* DefaultBaseClassTests.swift */; };
-		A4B64ACA210D17AA00A236D4 /* AnyBaseClassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B64AC9210D17A900A236D4 /* AnyBaseClassTests.swift */; };
-		OBJ_22 /* PolyCodableCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* PolyCodableCore.swift */; };
+		A4AFE82B21068E36001A64E5 /* DefaultBaseClassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* DefaultBaseClassTests.swift */; };
+		OBJ_22 /* CoreTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* CoreTypes.swift */; };
 		OBJ_29 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_43 /* PolyCodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "PolyCodable::PolyCodable::Product" /* PolyCodable.framework */; };
 /* End PBXBuildFile section */
@@ -61,11 +60,10 @@
 		A41F925A2105347E0078313D /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		A41F925D210535AC0078313D /* PolymorphicBaseClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolymorphicBaseClass.swift; sourceTree = "<group>"; };
 		A4982DDB2108FC8E001F5BB2 /* PolyCodableDescriminatorContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolyCodableDescriminatorContainer.swift; sourceTree = "<group>"; };
-		A4B64AC9210D17A900A236D4 /* AnyBaseClassTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyBaseClassTests.swift; sourceTree = "<group>"; };
 		OBJ_12 /* DefaultBaseClassTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBaseClassTests.swift; sourceTree = "<group>"; };
 		OBJ_13 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-		OBJ_9 /* PolyCodableCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolyCodableCore.swift; sourceTree = "<group>"; };
+		OBJ_9 /* CoreTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTypes.swift; sourceTree = "<group>"; };
 		"PolyCodable::PolyCodable::Product" /* PolyCodable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PolyCodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"PolyCodable::PolyCodableTests::Product" /* PolyCodableTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = PolyCodableTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -100,7 +98,6 @@
 		OBJ_11 /* PolyCodableTests */ = {
 			isa = PBXGroup;
 			children = (
-				A4B64AC9210D17A900A236D4 /* AnyBaseClassTests.swift */,
 				OBJ_13 /* XCTestManifests.swift */,
 				OBJ_12 /* DefaultBaseClassTests.swift */,
 				A40B5A91210A8AD100AC39D0 /* DefaultBaseClassArrayTests.swift */,
@@ -140,7 +137,7 @@
 		OBJ_8 /* PolyCodable */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_9 /* PolyCodableCore.swift */,
+				OBJ_9 /* CoreTypes.swift */,
 				A41F925A2105347E0078313D /* Defaults.swift */,
 				A41F925D210535AC0078313D /* PolymorphicBaseClass.swift */,
 				A403C00C2107DB6900555F6C /* KeyedDecodingContainer+PolyCodable.swift */,
@@ -243,7 +240,7 @@
 				A40B5A94210A94B700AC39D0 /* PolymorphicCodingScheme.swift in Sources */,
 				A403C00D2107DB6900555F6C /* KeyedDecodingContainer+PolyCodable.swift in Sources */,
 				A41F925B2105347E0078313D /* Defaults.swift in Sources */,
-				OBJ_22 /* PolyCodableCore.swift in Sources */,
+				OBJ_22 /* CoreTypes.swift in Sources */,
 				A4982DDC2108FC8E001F5BB2 /* PolyCodableDescriminatorContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -261,10 +258,9 @@
 			buildActionMask = 0;
 			files = (
 				A41F925921052A410078313D /* PolyCodableTestHelpers.swift in Sources */,
+				A4AFE82B21068E36001A64E5 /* DefaultBaseClassTests.swift in Sources */,
 				A40B5A92210A8AD100AC39D0 /* DefaultBaseClassArrayTests.swift in Sources */,
 				A4AFE82921066CFE001A64E5 /* XCTestManifests.swift in Sources */,
-				A4B64ACA210D17AA00A236D4 /* AnyBaseClassTests.swift in Sources */,
-				A4B64AC8210D0C3300A236D4 /* DefaultBaseClassTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
