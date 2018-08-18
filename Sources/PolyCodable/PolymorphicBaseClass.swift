@@ -5,7 +5,9 @@
 //  Created by Christopher Kornher on 7/22/18.
 //
 
-/// Base class containing a discriminator property
+/// A generic base class provided for convenience
+
+import Foundation
 
 open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: PolyCompatibleCodingKey> : PolyCodable, Equatable {
     public typealias TypeDescriminator = D
@@ -30,6 +32,13 @@ open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: PolyCompatibleCod
         try container.encode( typeDescriminator, forKey:  K.discriminatorKey )
     }
 
+    // TODO: Move this to an extension
+    public static func from( _ data: Data,
+                             jsonDecoder decoder: JSONDecoder,
+                             codingScheme: PolymorphicCodingScheme = defaultPolymorphicCodingScheme ) throws -> Self {
+        return try codingScheme.decodeFromData(data, jsonDecoder: decoder)
+    }
+
     // MARK: Utility
     public static func == (lhs: PolymorphicBaseClass, rhs: PolymorphicBaseClass) -> Bool {
         guard lhs.equalTo(other: rhs) else {
@@ -44,4 +53,3 @@ open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: PolyCompatibleCod
         return self.typeDescriminator == other.typeDescriminator
     }
 }
-

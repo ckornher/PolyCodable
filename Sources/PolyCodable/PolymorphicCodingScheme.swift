@@ -15,10 +15,14 @@ public protocol PolymorphicCodingScheme : class {
                                     forKey key: Key) throws -> PC where PC : PolyCodable, Key : CodingKey
 
 
-    /// Decode polymorphically from a standard KeyedDecodingContainer using one of the standard methods, if the key is present in the container
+    /// Decode polymorphically from a standard KeyedDecodingContainer using one of the standard methods, if the key is present in the container.
     /// This method can be re-implemented for custom poymorphic coding schemes.  The key enum in this container must contain the descrimintor key.
     func polymorphicDecodeIfPresent<Key, PC>(from container: KeyedDecodingContainer<Key>,
                                              forKey key: Key) throws -> PC? where PC : PolyCodable, Key : CodingKey
+
+    /// Decode polymorphically from data. This method can be re-implemented for custom poymorphic coding schemes.
+    /// The descrimintor key must exist in the root container
+    func decodeFromData<PC: PolyCodable>( _ data: Data, jsonDecoder decoder: JSONDecoder ) throws -> PC
 
     // MARK: Collections
 
@@ -46,6 +50,12 @@ open class StandardPolymorphicCodingScheme : PolymorphicCodingScheme {
         return nil
     }
 
+    open func decodeFromData<PC: PolyCodable>( _ jsonData: Data, jsonDecoder decoder: JSONDecoder ) throws -> PC {
+        let baseObject = try decoder.decode( PolyCodableDescriminatorContainer<PC>.self, from: jsonData )
+        return try baseObject.typeDescriminator.from(jsonData, jsonDecoder: decoder)
+    }
+
+
     // MARK: Collections
 
     /// Decode an array polymorphically from a standard KeyedDecodingContainer.
@@ -71,8 +81,8 @@ open class StandardPolymorphicCodingScheme : PolymorphicCodingScheme {
 
     // MARK: - Utility
     open func decodeDescrimintor<Key, PC>( from container: KeyedDecodingContainer<Key>,
-                                       forKey key: Key,
-                                       type: PC.Type) throws -> PC.TypeDescriminator where PC: PolyCodable {
+                                           forKey key: Key,
+                                           type: PC.Type) throws -> PC.TypeDescriminator where PC: PolyCodable {
         let descriminator = try decodeDescrimintorIfPresent( from: container, forKey: key, type: type)
 
         if let descriminator = descriminator {
