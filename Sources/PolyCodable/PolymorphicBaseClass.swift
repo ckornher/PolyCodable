@@ -6,7 +6,9 @@
 //
 
 /// A generic base class provided for convenience
-/// 
+
+import Foundation
+
 open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: PolyCompatibleCodingKey> : PolyCodable, Equatable {
     public typealias TypeDescriminator = D
     public typealias PolyCodingKey = K
@@ -28,6 +30,13 @@ open class PolymorphicBaseClass<D:PolymorphicDiscriminator, K: PolyCompatibleCod
         var container = encoder.container( keyedBy: PolyCodingKey.self )
 
         try container.encode( typeDescriminator, forKey:  K.discriminatorKey )
+    }
+
+    // TODO: Move this to an extension
+    public static func from( _ data: Data,
+                             jsonDecoder decoder: JSONDecoder,
+                             codingScheme: PolymorphicCodingScheme = defaultPolymorphicCodingScheme ) throws -> Self {
+        return try codingScheme.decodeFromData(data, jsonDecoder: decoder)
     }
 
     // MARK: Utility

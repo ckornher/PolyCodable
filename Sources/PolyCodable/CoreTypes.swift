@@ -18,7 +18,8 @@ public protocol PolyCompatibleCodingKey : CodingKey /*, RawRepresentable where S
 }
 
 public protocol PolymorphicDiscriminator : Codable, RawRepresentable where Self.RawValue == String {
-    func from<PC: PolyCodable>( _ data: Data, jsonDecoder decoder: JSONDecoder ) throws -> PC
+    func from<PC: PolyCodable>( _ data: Data,
+                                jsonDecoder decoder: JSONDecoder) throws -> PC
 
     func decode<PC: PolyCodable, Key: CodingKey>( from container: KeyedDecodingContainer<Key>, forKey key: Key) throws -> PC
 
@@ -28,7 +29,26 @@ public protocol PolymorphicDiscriminator : Codable, RawRepresentable where Self.
 public protocol PolyCodable: Codable {
     associatedtype TypeDescriminator: PolymorphicDiscriminator
     associatedtype PolyCodingKey: PolyCompatibleCodingKey
+
+    static func from( _ data: Data,
+                      jsonDecoder decoder: JSONDecoder,
+                      codingScheme: PolymorphicCodingScheme ) throws -> Self
 }
+
+extension PolyCodable {
+
+    // TODO: This code causes a segmentation fault on Xcode 10 beta4
+//    public static func from(_ data: Data, jsonDecoder decoder: JSONDecoder, codingScheme: PolymorphicCodingScheme) throws -> Self{
+//        return try codingScheme.decodeFromData(data, jsonDecoder: decoder)
+//    }
+
+//    static func from<PC: PolyCodable>( _ data: Data,
+//                                       jsonDecoder decoder: JSONDecoder,
+//                                       codingScheme: PolymorphicCodingScheme = defaultPolymorphicCodingScheme) throws -> PC {
+//        return try codingScheme.decodeFromData(data, jsonDecoder: decoder)
+//    }
+}
+
 
 // MARK: Future
 //public struct PolymorphicDictionaryEntry<DictionaryKey, PC> where DictionaryKey: Hashable & Codable, PC: PolyCodable {
