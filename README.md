@@ -21,8 +21,8 @@ class B : TheBaseClass {...}
 A class `C` contains an optional and non-optional instance that can each be an `A` or a `B` could look like:
 ```
 class C {
-	let v1: TheBaseClass
-	let v2: TheBaseClass?
+  let v1: TheBaseClass
+  let v2: TheBaseClass?
 
   private enum CodingKeys: CodingKey {
     case v1
