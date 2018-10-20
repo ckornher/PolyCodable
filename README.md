@@ -9,6 +9,7 @@ Easy to use, safe support for polymorphic Swift codables.
 ### Type Safety
 The `Codable` system introduced in Swift 4 is strongly typed -- it utilizes enums for coding keys, and generics, for example. The architecture of the **PolyCodable** package was chosen to fit with the `Codable` style, and add polymorphic support as seamlessly and safely as possible.
 
+> **Note: Classes Only** Polymorphism is normally associated with classes. It is possible to create other related entities with characteristics similar to polymorphic classes, but this package only supports polymorphic classes. Pure Swift classes and NSObject-based classes are supported.
 
 ## Alternatives
 A number of blog posts and other examples encode and/or decode polymorphic objects utilizing low-level features of the `Codable` APIs. Here is a good example: https://medium.com/tsengineering/swift-4-0-codable-decoding-subclasses-inherited-classes-heterogeneous-arrays-ee3e180eb556
