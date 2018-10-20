@@ -16,7 +16,7 @@ public enum DefaultBaseCodingKey : PolyCompatibleCodingKey {
     public static var discriminatorKey: DefaultBaseCodingKey = .typeDescriminator
 }
 
-typealias DefaultKeyedPolymorphicClass<D:PolymorphicDiscriminator> = PolymorphicBaseClass<D, DefaultBaseCodingKey>
+public typealias DefaultKeyedPolymorphicClass<D:PolymorphicDiscriminator> = PolymorphicBaseClass<D, DefaultBaseCodingKey>
 
 // MARK: - Static Variables
 

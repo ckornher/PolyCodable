@@ -30,6 +30,7 @@
 		A4982DDD210A58BA001F5BB2 /* PolymorphicBaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41F925D210535AC0078313D /* PolymorphicBaseClass.swift */; };
 		A4AFE82921066CFE001A64E5 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XCTestManifests.swift */; };
 		A4AFE82B21068E36001A64E5 /* DefaultBaseClassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* DefaultBaseClassTests.swift */; };
+		A4B1F3F0217BCCF400BCDAC6 /* README_Examples.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B1F3EF217BCCF400BCDAC6 /* README_Examples.swift */; };
 		OBJ_22 /* CoreTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* CoreTypes.swift */; };
 		OBJ_29 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_43 /* PolyCodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "PolyCodable::PolyCodable::Product" /* PolyCodable.framework */; };
@@ -60,6 +61,7 @@
 		A41F925A2105347E0078313D /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		A41F925D210535AC0078313D /* PolymorphicBaseClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolymorphicBaseClass.swift; sourceTree = "<group>"; };
 		A4982DDB2108FC8E001F5BB2 /* PolyCodableDescriminatorContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolyCodableDescriminatorContainer.swift; sourceTree = "<group>"; };
+		A4B1F3EF217BCCF400BCDAC6 /* README_Examples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = README_Examples.swift; sourceTree = "<group>"; };
 		OBJ_12 /* DefaultBaseClassTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBaseClassTests.swift; sourceTree = "<group>"; };
 		OBJ_13 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -87,9 +89,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A4B1F3EE217BCCB900BCDAC6 /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				A4B1F3EF217BCCF400BCDAC6 /* README_Examples.swift */,
+			);
+			path = Examples;
+			sourceTree = "<group>";
+		};
 		OBJ_10 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A4B1F3EE217BCCB900BCDAC6 /* Examples */,
 				OBJ_11 /* PolyCodableTests */,
 			);
 			name = Tests;
@@ -259,6 +270,7 @@
 			files = (
 				A41F925921052A410078313D /* PolyCodableTestHelpers.swift in Sources */,
 				A4AFE82B21068E36001A64E5 /* DefaultBaseClassTests.swift in Sources */,
+				A4B1F3F0217BCCF400BCDAC6 /* README_Examples.swift in Sources */,
 				A40B5A92210A8AD100AC39D0 /* DefaultBaseClassArrayTests.swift in Sources */,
 				A4AFE82921066CFE001A64E5 /* XCTestManifests.swift in Sources */,
 			);
