@@ -35,19 +35,19 @@ public protocol PolyCodable: Codable {
                       codingScheme: PolymorphicCodingScheme ) throws -> Self
 }
 
-//extension PolyCodable {
-//
-//// TODO: This code causes a segmentation fault on Xcode 10 beta4
-//    public static func from(_ data: Data, jsonDecoder decoder: JSONDecoder, codingScheme: PolymorphicCodingScheme) throws -> Self{
-//        return try codingScheme.decodeFromData(data, jsonDecoder: decoder)
-//    }
-//
-//    static func from<PC: PolyCodable>( _ data: Data,
-//                                       jsonDecoder decoder: JSONDecoder,
-//                                       codingScheme: PolymorphicCodingScheme = defaultPolymorphicCodingScheme) throws -> PC {
-//        return try codingScheme.decodeFromData(data, jsonDecoder: decoder)
-//    }
-//}
+extension PolyCodable {
+
+// TODO: This code causes a segmentation fault on Xcode 10 beta4
+    public static func from(_ data: Data, jsonDecoder decoder: JSONDecoder, codingScheme: PolymorphicCodingScheme) throws -> Self{
+        return try codingScheme.decodeFromData(data, jsonDecoder: decoder)
+    }
+
+    static func from<PC: PolyCodable>( _ data: Data,
+                                       jsonDecoder decoder: JSONDecoder,
+                                       codingScheme: PolymorphicCodingScheme = defaultPolymorphicCodingScheme) throws -> PC {
+        return try codingScheme.decodeFromData(data, jsonDecoder: decoder)
+    }
+}
 
 
 // MARK: Future
